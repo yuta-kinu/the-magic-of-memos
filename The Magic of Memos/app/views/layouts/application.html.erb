@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Magic of Memos</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <header>
+      <div class="header-logo">
+        <% if @current_user %>
+          <%= link_to("The Magic of Memos", "/posts/index") %>
+        <% else %>
+          <%= link_to("The Magic of Memos", "/") %>
+        <% end %>
+      </div>
+      
+      <div id="nav-drawer">
+        <input id="nav-input" type="checkbox" class="nav-unshown">
+        <label id="nav-open" for="nav-input"><span></span></label>
+        <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+        <div id="nav-content">
+          <ul>
+            <% if @current_user %>
+              <li>
+                <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+              </li>
+              <li>
+                <%= link_to("投稿一覧", "/posts/index") %>
+              </li>
+              <li>
+                <%= link_to("新規投稿", "/posts/new") %>
+              </li>
+              <li>
+                <%= link_to("ユーザー一覧", "/users/index") %>
+              </li>
+              <li>
+                <%= link_to("ログアウト", "/logout", {method: :post}) %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to("メモの魔力とは", "/about") %>
+              </li>
+              <li>
+                <%= link_to("新規登録", "/signup") %>
+              </li>
+              <li>
+                <%= link_to("ログイン", "/login") %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <% if flash[:notice] %>
+      <div class="flash time-limit">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
+    <%= yield %>
+  </body>
+</html>
